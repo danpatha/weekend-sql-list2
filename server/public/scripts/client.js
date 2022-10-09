@@ -8,6 +8,7 @@ $( document ).ready( function(){
   getList();
   //Click Handlers
   $('#viewTasks').on('click', '.removeBtn', deleteTask);
+  $('#viewTasks').on('click', '.completeBtn', completeTask);
 })
 
 //Part I of adding a new task.
@@ -28,6 +29,7 @@ $( document ).ready( function(){
 //     });
 // }
 
+//GET
 function getList(){
     console.log( 'in getLIST' );
     // ajax call to server to get koalas
@@ -45,7 +47,7 @@ function getList(){
                 <td>${tasks.estimatedTimeInMin}</td>
                 <td>${tasks.dateDue}</td>
                 <td>Completed</td>
-                <td><button class="readyBtn" data-id="${tasks.id}">CHANGE TO <b>"NOT COMPLETED"</b></button></td>
+                <td><b>Done, GREAT JOB!</b></td>
                 <td>${tasks.notes}</td>
                 <td><button class="removeBtn" data-id="${tasks.id}">REMOVE</button></td>
               </tr>
@@ -58,7 +60,7 @@ function getList(){
             <td>${tasks.estimatedTimeInMin}</td>
             <td>${tasks.dateDue}</td>
             <td>Not Completed</td>
-            <td><button class="readyBtn" data-id="${tasks.id}">CHANGE TO <b>"COMPLETED"</b></button></td>
+            <td><button class="completeBtn" data-id="${tasks.id}">CHANGE TO <b>"COMPLETED"</b></button></td>
             <td>${tasks.notes}</td>
             <td><button class="removeBtn" data-id="${tasks.id}">REMOVE</button></td>
           </tr>
@@ -71,6 +73,28 @@ function getList(){
       })
   } // end getKoalas
 
+  //PUT
+   //click listener & function to mark koala READY TO TRANSFER
+ function completeTask(){
+    console.log('in completeBtn click');
+    // taskId is the id of the koala which was clicked
+    const taskId = $(this).data('id');
+    console.log('click to transfer id:', taskId);
+
+    $.ajax({
+      method:'PUT',
+      url:`/list/${taskId}`
+    })  
+      //then insert the response as an argument to call getKoalas() and update DOM
+      .then(function(res) {
+        getList();
+      })
+      .catch((err) => {
+        console.log('PUT /koalas error', err)
+      })
+  }
+
+  //DELETE
   function deleteTask(){
     console.log('in deleteTask', $(this).data("id"));
     //get the id from the DOM

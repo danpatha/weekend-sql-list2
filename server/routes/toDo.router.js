@@ -37,6 +37,24 @@ toDo.delete('/:id', (req, res) => {
         });
   
   });
+
+  toDo.put('/:id', (req, res) => {
+    console.log( 'in toDo PUT with id of:', req.params.id);
+
+    let queryText = `UPDATE "list" SET "complete" = NOT "complete" 
+                    WHERE "id" = $1;`;
+
+    pool 
+        .query(queryText, [req.params.id])
+        .then((result) => {
+            console.log('task is complete!')
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.log('Error updating ready status', err);
+            res.sendStatus(500);
+        });
+});
   
 
 // toDo.post('/', (req, res) => {
