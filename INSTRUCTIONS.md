@@ -20,7 +20,8 @@ You are going to create a 'TO DO' application. This type of application is very 
 * When a Task is complete, its visual representation should change on the front end. For example, the background of the task container could change from gray to green. The complete option should be  'checked off'. Each of these are accomplished in CSS, but will need to hook into logic to know whether or not the task is complete.
 * Whether or not a Task is complete should also be stored in the database.
 * Deleting a Task should remove it both from the front end as well as the Database.
-
+FILES= pool.js =DONE,
+ 
 ### Styling
 
 Use CSS styling to move the aesthetic of the page beyond the vanilla HTML look:
@@ -38,7 +39,7 @@ Be sure to create a new database through Postico. Use the name `weekend-to-do-ap
 
 ### Database Structure
 
-Please include a `database.sql` text file in your repo that includes all of your `CREATE TABLE` queries. This is so we can re-create your database while testing your app.
+<!-- Please include a `database.sql` text file in your repo that includes all of your `CREATE TABLE` queries. This is so we can re-create your database while testing your app. -->
 
 ## Stretch Goals
 
