@@ -20,6 +20,25 @@ toDo.get('/', (req, res) => {
         })
 })
 
+toDo.delete('/:id', (req, res) => {
+    console.log('in delete with id:  ', req.params.id);
+  
+        //delete the song from the DB with id
+        const sqlText = `DELETE FROM "list" WHERE "id" = $1;`;
+        const sqlPrams = [req.params.id];
+  
+        pool.query(sqlText, sqlPrams)
+        .then((dbRes) => {
+            res.sendStatus(200);//Good it worked
+        })
+        .catch((err) => {
+            console.log('POST err', err);
+            res.sendStatus(500);
+        });
+  
+  });
+  
+
 // toDo.post('/', (req, res) => {
 //     console.log('req.body is:', req.body);
 

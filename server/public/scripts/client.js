@@ -3,31 +3,30 @@ console.log( 'js' );
 $( document ).ready( function(){
   console.log( 'JQ' );
   //Establish Click Listeners
-clickListeners()
+//clickListeners()
  // load existing tasks on page load
   getList();
+  //Click Handlers
+  $('#viewTasks').on('click', '.removeBtn', deleteTask);
 })
 
 //Part I of adding a new task.
-function clickListeners() {
-    $( '#addButton' ).on( 'click', function(){
-      console.log( 'in addButton on click' );
-      // get user input and put in an object
-      let taskToSend = {
-        task: $('#taskIn').val(),
-        estimatedTimeInMin:$('#estimatedTimeInMin').val(),
-        dueDate:$('#dueDateIn').val(),
-        Complete:$('#completeIn').val(),
-        notes:$('#notesIn').val(),
-      };
+// function clickListeners() {
+//     $( '#addButton' ).on( 'click', function(){
+//       console.log( 'in addButton on click' );
+//       // get user input and put in an object
+//       let taskToSend = {
+//         task: $('#taskIn').val(),
+//         estimatedTimeInMin:$('#estimatedTimeInMin').val(),
+//         dueDate:$('#dueDateIn').val(),
+//         Complete:$('#completeIn').val(),
+//         notes:$('#notesIn').val(),
+//       };
       
-      // call saveKoala with the new obejct
-      saveTask (taskToSend);
-    });
-}
-
-
-
+//       // call saveKoala with the new obejct
+//       saveTask (taskToSend);
+//     });
+// }
 
 function getList(){
     console.log( 'in getLIST' );
@@ -71,6 +70,21 @@ function getList(){
         console.log('Something went wrong! in getKoalas() GET ajax call', err);
       })
   } // end getKoalas
+
+  function deleteTask(){
+    console.log('in deleteTask', $(this).data("id"));
+    //get the id from the DOM
+    let taskId = $(this).data("id");
+    //make a delete ajax request
+    $.ajax({
+        type: "DELETE",
+        url: `/list/${taskId}`, // append bookID to the URL
+    }).then(function(response){
+      getList();
+    }).catch(function(error){
+    console.log('err on delete', error)
+  });
+  }
 
   //Part II of Adding a new task.
 //   function saveTask(taskToSend){
