@@ -1,3 +1,20 @@
+body{
+    background-color:rosybrown;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+
+h1{
+    text-align: center;
+    font-size: 50px;
+}
+
+h2{
+    text-align: center;
+    font-style:italic;
+    font-size: 30px;
+}
+
 table {
     border: 2px solid black;
     text-align: center;
@@ -16,4 +33,12 @@ td {
     border-right: 2px solid black;
     border-radius: 5px;
     padding: 10px 10px 5px 10px;
+}
+
+.colorChange {
+    background-color:bisque;
+}
+
+b{
+    color:brown;
 }

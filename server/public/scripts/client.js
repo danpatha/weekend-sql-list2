@@ -42,7 +42,7 @@ function getList(){
         for(const tasks of res) {
           if(tasks.complete) {
             $('#viewTasks').append(`
-              <tr>
+              <tr class="colorChange">
                 <td>${tasks.task}</td>
                 <td>${tasks.estimatedTimeInMin}</td>
                 <td>${tasks.dateDue}</td>
