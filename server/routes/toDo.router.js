@@ -41,7 +41,7 @@ toDo.delete('/:id', (req, res) => {
   toDo.put('/:id', (req, res) => {
     console.log( 'in toDo PUT with id of:', req.params.id);
 
-    let queryText = `UPDATE "list" SET "complete" = NOT "complete" 
+    let queryText = `UPDATE "list" SET "complete" = TRUE
                     WHERE "id" = $1;`;
 
     pool 
@@ -57,36 +57,35 @@ toDo.delete('/:id', (req, res) => {
 });
   
 
-// toDo.post('/', (req, res) => {
-//     console.log('req.body is:', req.body);
+toDo.post('/', (req, res) => {
+    console.log('req.body is:', req.body);
 
-//     const sqlText = `
-//     INSERT INTO "list"
-//         ("task","estimatedTimeInMin","dateDue","complete","notes")
+    const sqlText = `
+    INSERT INTO "list"
+        ("task","estimatedTimeInMin","complete","notes")
     
-//     VALUES
-//         ($1,$2,$3,$4,$5)       
-//     `;
+    VALUES
+        ($1,$2,$3,$4)       
+    `;
 
-//     const sqlParams = [
-//         req.body.task,
-//         req.body.estimatedTimeInMin,
-//         req.body.dateDue,
-//         req.body.complete,
-//         req.body.notes,
-//     ];
+    const sqlParams = [
+        req.body.task,
+        req.body.estimatedTimeInMin,
+        req.body.complete,
+        req.body.notes,
+    ];
 
-//     console.log('in sqlText',sqlText)
+    console.log('in sqlText',sqlText)
 
-//     pool.query(sqlText,sqlParams)
-//         .then((dbRes) =>{
-//             res.sendStatus(201)
-//         })
-//         .catch((err) =>{
-//             console.log('POST not working',err)
-//             res.sendStatus(500)
-//         })
-//     })
+    pool.query(sqlText,sqlParams)
+        .then((dbRes) =>{
+            res.sendStatus(201)
+        })
+        .catch((err) =>{
+            console.log('POST not working',err)
+            res.sendStatus(500)
+        })
+    })
 
 
 

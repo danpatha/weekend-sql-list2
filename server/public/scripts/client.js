@@ -9,30 +9,30 @@ $( document ).ready( function(){
   //Click Handlers
   $('#viewTasks').on('click', '.removeBtn', deleteTask);
   $('#viewTasks').on('click', '.completeBtn', completeTask);
+  $( '#addButton' ).on( 'click', Listeners)
 })
 
 //Part I of adding a new task.
-// function clickListeners() {
-//     $( '#addButton' ).on( 'click', function(){
-//       console.log( 'in addButton on click' );
-//       // get user input and put in an object
-//       let taskToSend = {
-//         task: $('#taskIn').val(),
-//         estimatedTimeInMin:$('#estimatedTimeInMin').val(),
-//         dueDate:$('#dueDateIn').val(),
-//         Complete:$('#completeIn').val(),
-//         notes:$('#notesIn').val(),
-//       };
+function Listeners() {
+      console.log( 'in addButton on click' );
+      // get user input and put in an object
+      let taskToSend = {
+        task: $('#taskIn').val(),
+        estimatedTimeInMin:$('#estimatedTimeInMin').val(),
+        // dueDate:$('#dueDateIn').val(),
+        // Complete:$('#completeIn').val(),
+        notes:$('#notesIn').val(),
+      };
       
-//       // call saveKoala with the new obejct
-//       saveTask (taskToSend);
-//     });
-// }
+      // call saveTask with the new obejct
+      saveTask (taskToSend);
+    };
+
 
 //GET
 function getList(){
     console.log( 'in getLIST' );
-    // ajax call to server to get koalas
+    // ajax call to server to get tasks
     $.ajax({
       url: '/list',
       method: 'GET'
@@ -45,7 +45,6 @@ function getList(){
               <tr class="colorChange">
                 <td>${tasks.task}</td>
                 <td>${tasks.estimatedTimeInMin}</td>
-                <td>${tasks.dateDue}</td>
                 <td>Completed</td>
                 <td><b>Done, GREAT JOB!</b></td>
                 <td>${tasks.notes}</td>
@@ -58,9 +57,8 @@ function getList(){
             <tr>
             <td>${tasks.task}</td>
             <td>${tasks.estimatedTimeInMin}</td>
-            <td>${tasks.dateDue}</td>
             <td>Not Completed</td>
-            <td><button class="completeBtn" data-id="${tasks.id}">CHANGE TO <b>"COMPLETED"</b></button></td>
+            <td><button class="completeBtn" data-id="${tasks.id}">CHANGE TO COMPLETED</button></td>
             <td>${tasks.notes}</td>
             <td><button class="removeBtn" data-id="${tasks.id}">REMOVE</button></td>
           </tr>
@@ -69,15 +67,14 @@ function getList(){
         }
       })
       .catch((err) => {
-        console.log('Something went wrong! in getKoalas() GET ajax call', err);
+        console.log('Something went wrong! in getList() GET ajax call', err);
       })
-  } // end getKoalas
+  } // end getTask
 
   //PUT
-   //click listener & function to mark koala READY TO TRANSFER
  function completeTask(){
     console.log('in completeBtn click');
-    // taskId is the id of the koala which was clicked
+    // taskId is the id of the task which was clicked
     const taskId = $(this).data('id');
     console.log('click to transfer id:', taskId);
 
@@ -85,12 +82,12 @@ function getList(){
       method:'PUT',
       url:`/list/${taskId}`
     })  
-      //then insert the response as an argument to call getKoalas() and update DOM
+      //then insert the response as an argument to call getList() and update DOM
       .then(function(res) {
         getList();
       })
       .catch((err) => {
-        console.log('PUT /koalas error', err)
+        console.log('PUT /list error', err)
       })
   }
 
@@ -111,19 +108,19 @@ function getList(){
   }
 
   //Part II of Adding a new task.
-//   function saveTask(taskToSend){
-//     console.log( 'in saveTask', taskToSend );
-//     // ajax call to server to get tasks
-//         $.ajax({
-//         method: 'POST',
-//         url: '/list',
-//         data: taskToSend
-//       })
-//       .then((response) =>{
-//        console.log(response)
-//        getKoalas();
-//       })
-//       .catch((err) =>{
-//         console.log('error in POST ',err)
-//       })
-//   }
+  function saveTask(taskToSend){
+    console.log( 'in saveTask', taskToSend );
+    // ajax call to server to get tasks
+        $.ajax({
+        method: 'POST',
+        url: '/list',
+        data: taskToSend
+      })
+      .then((response) =>{
+       console.log(response)
+       getList();
+      })
+      .catch((err) =>{
+        console.log('error in POST ',err)
+      })
+  }
