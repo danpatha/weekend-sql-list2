@@ -1,9 +1,11 @@
 const express = require('express');
 const toDo = express.Router();
+//Or just put it in one like this,
+//const router = require('express').Router();
 const pool = require('../modules/pool');
 
 //This is where the database connection is
-
+// GET This sends back to the router our To Do list.
 toDo.get('/', (req, res) => {
     console.log('in /list GET');
 
