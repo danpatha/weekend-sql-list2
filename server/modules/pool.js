@@ -1,13 +1,13 @@
 const pg = require('pg');
-const pool = new pg.Pool(config);
+const Pool = pg.Pool;
 
-const config = {
+const pool = new Pool({
     database:'weekend-to-do-app',
     host: 'localhost',
     port: 5432,
     max: 10,
     idleTimeoutMillis:30000
-};
+});
 
 
 
