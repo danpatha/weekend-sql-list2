@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+require('dotenv').config()
+
+
 //Setting a port  helps when we deploy this website to AWS or other places, below. 
 const PORT = process.env.PORT || 5000;
 const toDo = require('./routes/toDo.router')
